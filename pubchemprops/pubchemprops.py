@@ -67,9 +67,9 @@ def get_first_layer_props(compound_name, first_layer_props):
     return first_layer_props_data
 
 
-def get_second_layer_props(compound_name, required_properties):
+def get_second_layer_props(identifer, required_properties, identifer = "name"):
     """
-        1. Accepts the compound name
+        1. acccepts multiple identifiers (name, cids)
         2. Gets the CID for this compound
         3. Searches PubChem for data for the specified CID
         4. Cycles through the fetched data to select required fields
@@ -79,7 +79,15 @@ def get_second_layer_props(compound_name, required_properties):
               accessed directly via the PubChem PUG REST API.
     """
     # Get the compound's PubChem CID
-    compound_cid = get_cid_by_name(compound_name)
+    if identifer == "name":
+        compound_cid = get_cid_by_name(identifer)
+    elif identifier == 'cid':
+        compound_cid = identifer
+    else:
+        raise Exception("Only name or cid accepted")
+    
+
+        
 
     # Contsruct the link
     pubchem_all_data_link = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/"
